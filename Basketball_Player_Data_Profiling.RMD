@@ -1,0 +1,184 @@
+---
+title: "Lab 1"
+author: "Larbi Moukhlis"
+output:
+  html_document:
+    code_download: true
+    toc: true
+  pdf_document:
+    toc: true
+---
+
+# Make sure to add remaining questions from the PDF posted to Sakai on the assignment. 
+
+### Q1: Create variables for the following and assign the value to the right of the variable name for each:
+- Firstname Zach
+- Lastname Lavine
+- Position SG
+- Age 25
+- Team Chicago Bulls
+- PPG 24.9
+- AllStarYear 2024
+    
+```{r}
+Firstname = "Zach"
+Lastname = "Lavine"
+Position = "SG"
+Age = 25
+Team = "Chicago Bulls"
+PPG = 24.9 
+AllStarYear = 2024
+```
+
+
+### Q2: Display the results and check the class of each of the variables (variables: Firstname, Lastname, Position, Age, Team, PPG, AllStarYear)
+- display the results of each variable (what is the value)
+- display the class of each (what is the data type) class()
+```{r}
+Firstname
+Lastname
+Position
+Age
+PPG
+AllStarYear
+
+class(Firstname)
+class(Lastname)
+class(Position)
+class(Age)
+class(PPG) 
+class(AllStarYear)
+```
+
+
+### Q3: Change the data types as listed--if needed--based on class results of last chunk
+- Firstname char (character)
+- Lastname char (character)
+- Position factor (factor)
+- Age int (integer)
+- Team factor (factor)
+- PPG num (numeric)
+- AllStarYear factor (factor)
+- Rerun the class on each and display the results after any changes
+
+```{r}
+Position = as.factor(Position)
+Age = as.integer(Age)
+AllStarYear = as.factor(AllStarYear)
+```
+
+### Q4: Remove the variables created from the Global Environment
+- rm(variablename)
+- Firstname, Lastname, Position, Age, Team, PPG, AllStarYear
+```{r}
+rm(Firstname,Lastname, Position, Age, Team, PPG, AllStarYear)
+```
+
+### Q5: Create a vector for each element/column below; display the vectors, display the data type and length of each;
+firstname lastname Position Age Team PPG AllStarYear
+Zach Lavine SG 24 Bulls 24.9 2024
+Kevin Durant F 33 Nets 29.3 2024
+Demar DeRozan G-F 32 Bulls 26.4 2024
+Trae Young G 23 Hawks 27.7 2024
+- Required for Question 5:
+- Create a vector for each column (name the vector the column name above)
+- display the class for each vector class()
+- display the length of each vector length()
+
+```{r}
+Firstname = c("Zach", "Kevin", "Demar", "Trae")
+Lastname = c("Lavine", "Durant", "DeRozan", "Young")
+Position = c("SG", "F", "G-F", "G")
+Age = c(24,33,32,23)
+Team = c("Bulls", "Nets", "Bulls", "Hawks")
+PPG = c(24.9, 29.3,26.4,27.7)
+AllStarYear = c(2024,2024,2024,2024)
+```
+
+### Q6: Create the dataframe called AllStarsEast; display the dataframe
+- (firstname, lastname, Position, Age, Team, PPG, AllStarYear)
+```{r}
+AllStarEast = data.frame(Firstname, Lastname, Position, Age, Team, PPG, AllStarYear)
+
+```
+
+### Q7: Run str() to see the types of the dataframe columns str(AllStarsEast
+```{r}
+str(AllStarEast)
+
+```
+
+### Q8: Change any column needed to the following data types AND run str again on AllStarsEast. Make sure to use the
+‘dataframe prefix’ on both sides before the columns names.
+- firstname char (character)
+- lastname char (character)
+- Position factor (factor)
+- Age int (integer)
+- Team factor (factor)
+- PPG num (numeric)
+- AllStarYear factor (factor)
+
+```{r}
+Position = as.factor(Position)
+Age = as.integer(Age)
+Team = as.factor(Team)
+AllStarYear = as.factor(AllStarYear)
+str(AllStarEast)
+```
+
+### Q9: Display the average PPG by Team for dataframe AllStarsEast | Hint: tapply(AllStarsEast$PPG,
+AllStarsEast$Team, mean) 
+```{r}
+tapply(AllStarEast$PPG, AllStarEast$Team, mean)
+```
+
+### Q10: Display the average PPG by Position for dataframe AllStarsEast | Hint: tapply tapply(AllStarsEast$PPG,
+AllStarsEast$Position, mean) 
+```{r}
+tapply(AllStarEast$PPG,AllStarEast$Position,mean)
+```
+
+### Q11: Display the frequency for Team in dataframe AllStarsEast | Hint: table(AllStarsEast$Team)
+```{r}
+table(AllStarEast$Team)
+```
+
+### Q12: Answer the following questions descriptive statistic methods:
+- Run code to find the average age. Comment the response to the following question using the code output: What is the average age from dataframe AllStarsEast?
+- Run the summary statistics for the entire AllStarsEast dataframe.
+**Notice the difference for character vs factor data types in the output**
+```{r}
+mean(AllStarEast$Age)
+summary(AllStarEast)
+```
+
+### Q13: Use dataframe[Rows, Columns] to display the first row of data for all columns.
+```{r}
+AllStarEast[1,]
+```
+
+### Q14: Use dataframe[Rows, Columns] to display the points per game, PPG (column 6) of data for the 3rd player (row 3).
+```{r}
+AllStarEast[3,6]
+```
+
+### Q15: Use dataframe[Rows, Columns] to replace the points per game, PPG (column 6) of datafor the 3rd player (row 3) to the value of 27
+```{r}
+AllStarEast[3, 6] <-27
+```
+
+### Q16: Create a subset from AllStarsEast to only include the players from the team Bulls and call this Bullsplayers
+```{r}
+Bullsplayers <- subset(AllStarEast, Team == "Bulls")
+```
+
+### Q17: Display the new data frame, Bullsplayers
+```{r}
+print(Bullsplayers)
+```
+
+
+
+### SAVING and CREATING html FILE
+After completing your R Notebook or R Markdown file, you will execute all the chunks, save the file, and generate the html file containing the codes and the results. 
+

@@ -1,0 +1,189 @@
+---
+title: "Lab_3"
+author: "Larbi Moukhlis"
+output: 
+  html_document: 
+    code_download: yes
+    toc: yes
+---
+**NOTE: do not change any code above other than the name, do not add the date to line 4--it auto populates the date)**
+
+# R Markdown
+
+----------------------------------------------------------------------------------
+
+## Question 1: Load in the data starbucksmenu.csv as a data frame object called sbux
+```{r}
+sbux = read.csv("starbucksmenu.csv")
+```
+
+## Question 2: Display the first 8 rows of the data frame object sbux
+```{r}
+head(sbux, 8) 
+```
+
+## Question 3: Display the first 10 rows of the data frame object sbux
+```{r}
+head(sbux, 10)
+```
+
+## Question 4: Display the last 6 rows of the data frame object sbux
+```{r}
+tail(sbux, 6)
+```
+
+
+## Question 5: Display the structure of the data frame sbux; look at the data types and make sure they are loaded appropriately
+-   display the structure (should only be 3 chr characters)
+-   Bucket the categorical vs numerical variables/columns. Comment your response using # within the chunk determining whether each column/variable is numerical or categorical.
+```{r}
+#str (code)
+str(sbux)
+
+#categorical: Beverage_category, Beverage, Beverage_Prep
+#numerical: Calories, Total_Fat_g, Trans_Fat_g, Saturated_Fat_g, Sodium_mg, Total_Carbs_g, Cholesterol_mg, Fiber_g, Sugar_g, Protein_g, Vitamin_PercDv, VitaminC,_PercDv, CalciumPercDv, Iron_PercDv, Caffeine_mg 
+```
+
+## Question 6: Display the total number of rows and columns in the data frame sbux
+-   what does the number of rows represent (what is the dataset—what does each row represent..familiarize)? Comment your response using # within the chunk.
+```{r}
+#number of rows (code)
+nrow(sbux)
+#number of columns (code)
+ncol(sbux)
+
+# what does the number of rows represent (conceptually)?:
+# Each row in the data frame represents a unique Starbucks drink with its own nutritional facts and preparation style
+```
+
+## Question 7: Basic calculations (answer using the code for each bullet, like mean/sd/max etc.):
+- What is the average Calories from sbux?
+- What is the average Caffeine_mg from sbux?
+- What are the max Calories from sbux?
+- What is the spread/standard deviation (variation) Calories from sbux?
+- What is the range for Calories from sbux?
+```{r}
+mean(sbux$Calories)
+mean(sbux$Caffeine_mg)
+max(sbux$Calories)
+sd(sbux$Calories)
+range(sbux$Calories)
+```
+
+## Question 8: Display the summary results for the data frame called sbux
+- What is the average calories for the drinks? Comment your response using # within the chunk
+```{r}
+summary(sbux)
+# 198
+```
+
+## Question 9: Display the summary results for each (BY) Beverage_category separately for column 4 (Calories) only
+(points off if not correct view)
+- Analyze the results
+- Which beverage category has the highest calories on average (mean)? Comment your response using # within the
+chunk.
+- Which beverage category has the lowest calories on average (mean)? Comment your response using # within the
+chunk.
+- Which beverage category has the highest calories (max)? Comment your response using # within the chunk.
+```{r}
+by(sbux[,4],sbux$Beverage_category,summary)
+# Frappucino 
+# Coffee
+# Espresso
+```
+
+## Question 10: Display a frequency table for Beverage_category from the data frame sbux
+- How many Classic Espresso Drinks are available on the menu? Comment your response using # within the chunk.
+```{r}
+table(sbux$Beverage_category)
+# 98
+```
+
+## Question 11: Display a table summarizing the Average (mean) Caffeine_mg by Beverage_category from the data frame
+sbux
+- Which category has the highest overall average mg of caffeine? Comment your response using # within the chunk.
+- Which category has the lowest overall average mg of caffeine? Comment your response using # within the chunk.
+```{r}
+tapply(sbux$Caffeine_mg,sbux$Beverage_category, mean)
+# Coffee 
+# Tea
+```
+
+## Question 12:
+- Display the summarized standard deviation (sd) Caffeine_mg by Beverage_category for sbux
+- Display the summarized average (mean) Calories by Beverage_category for sbux
+```{r}
+tapply(sbux$Caffeine_mg,sbux$Beverage_category, sd)
+tapply(sbux$Calories, sbux$Beverage_category,mean)
+```
+
+## Question 13: Display/Plot the distribution for the Calories using the data frame sbux (histogram)
+- add a color col="darkseagreen4"
+- add a title main = "Calorie Distribution Table for Starbucks Drinks"
+```{r}
+hist(sbux$Calories, main = "Calorie Distribution Table for Starbucks Drinks", col = "darkseagreen4")
+```
+
+## Question 14: Display a boxplot for Calories from the data frame sbux
+- add a color col = "limegreen"
+- add a title main = "Calorie Distribution for Starbucks Drinks"
+- Based on the output, how many outliers are in the data? Comment your response using # within the chunk.
+- Approximately (just look and provide the approximate), what is the first quartile? What is the second quartile? Comment
+your response using # within the chunk.
+```{r}
+boxplot(sbux$Calories, main = "Calorie Distribution for Starbucks Drinks", col = "limegreen")
+# One outlier
+# 1st quartile appears to be around 100 calories 
+# 2nd quartile appears to be around 200 calories
+```
+
+## Question 15: Display a boxplot for Calories by Beverage_category from the data frame sbux
+- add a color col = "yellowgreen"
+- add a title main = "Calorie Distribution by Beverage Category for Starbucks Drinks"
+```{r}
+boxplot(sbux$Calories~sbux$Beverage_category, main = "Calorie Distribution by Beverage Category for Starbucks Drinks", col = "yellowgreen")
+```
+
+## Question 16: Display a boxplot for Caffeine_mg by Beverage_category from the data frame sbux
+- add a color col = "lightgreen"
+- add a title main = "Caffeine(mg) Distribution by Beverage Category for Starbucks Drinks"
+- Does Coffee or Espresso have higher caffeine? Comment your response using # within the chunk.
+```{r}
+boxplot(sbux$Caffeine_mg~sbux$Beverage_category, main = "Caffeine(mg) Distribution by Beverage Category for Starbucks Drinks", col = "lightgreen")
+# Coffee
+```
+
+## Question 17: Display a scatterplot for Calories (x) and Sugar_g (y) from sbux [Hint: plot(x, y)]
+- add a color col = "blue"
+- add a title main = "Starbucks: Calories and Sugar"
+- Does Calories and Sugar have a positive relationship/trend? Comment your response using # within the chunk. Yes or No
+```{r}
+plot(sbux$Calories, sbux$Sugar_g, main = "Starbucks: Calories and Sugar", col = "blue")
+# Yes
+```
+
+## Question 18: Use par(mfrow=c(2,2)) to display the following plots in 2 row 2 columns on the output. The first line of code
+in the chunk will be the par(mfrow=c(2,2)) and then within the same chunk, put the 4 lines of code for the plots below
+directly on the next line of the par() code above. In this chunk, you will have 5 lines of code.
+- Display a scatterplot for Calories (x) and Sugar_g (y) from sbux (col = "blue")
+- Display a scatterplot for Calories (x) and Total_Carbs_g (y) from sbux (col = "palegreen3")
+- Display a histogram distribution for Calories from sbux (col = "seagreen4")
+- Display a boxplot for Caffeine_mg by Beverage_category from the data frame sbux (col = "limegreen")
+```{r}
+par(mfrow=c(2,2))
+plot(sbux$Calories, sbux$Sugar_g, main = "Starbucks: Calories and Sugar", col = "blue")
+plot(sbux$Calories, sbux$Total_Carbs_g, main = "Starbucks: Calories and Total Carbs", col = "palegreen3")
+hist(sbux$Calories, main = "Calorie Distribution for Starbucks Drinks", col = "seagreen4")
+boxplot(sbux$Caffeine_mg ~ sbux$Beverage_category, main = "Caffeine(mg) Distribution by Beverage Category", col = "limegreen")
+```
+
+
+**ADD THE QUESTIONS BELOW AND A CHUNK FOLLOWING EACH FROM THE PDF POSTED TO THE ASSIGNMENT**
+
+
+
+
+### Knit to HTML
+
+**Copyright Kaitlyn Hoffmann, All rights reserved. Not for resale, distribution, or posting to external sites for all content provided.**
+
