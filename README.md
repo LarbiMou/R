@@ -1,7 +1,7 @@
 # R Data Analysis Portfolio
 Author: Larbi Moukhlis
 
-📌 Project Overview
+### Project Overview
 This repository contains R analyses covering:
 
 Descriptive statistics (distributions, sector comparisons)
@@ -14,7 +14,7 @@ Data visualization (ggplot2, base R plots)
 
 Key datasets: S&P 500 companies, global health indicators, Starbucks nutrition, fetal health diagnostics.
 
-📂 File Descriptions
+### File Descriptions
 Core Analyses
 Basketball_Player_Data_Profiling.Rmd: NBA player data type validation and summary stats.
 
@@ -32,7 +32,7 @@ Manufacturing_Production_Optimization.Rmd: LP model for fitness equipment produc
 
 Dietary_Cost_Minimization_Model.Rmd: Nutrient cost optimization.
 
-🛠️ Technical Stack
+### Technical Stack
 Languages: R
 
 Libraries:
@@ -45,7 +45,7 @@ Visualization: ggplot2, lattice
 
 Optimization: lpSolve
 
-🚀 How to Use
+### How to Use
 Clone repo:
 
 bash
@@ -56,7 +56,7 @@ r
 install.packages(c("dplyr", "ggplot2", "lpSolve"))
 Run RMarkdown files interactively or knit to HTML/PDF.
 
-📊 Key Insights
+### Key Insights
 S&P 500: Technology sector dominates market cap (avg. $1.2T).
 
 Health Data: Income composition explains 62% of life expectancy variance.
