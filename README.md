@@ -1,64 +1,79 @@
 # R Data Analysis Portfolio
+R Data Analysis Portfolio
 Author: Larbi Moukhlis
 
-### Project Overview
-This repository contains R analyses covering:
+Project Overview
+This repository contains R-based analytical projects covering:
 
-Descriptive statistics (distributions, sector comparisons)
+Descriptive Analytics: Distributions, sector comparisons, contract type frequencies
 
-Predictive modeling (linear regression, k-means clustering)
+Predictive Modeling: Linear regression, k-means clustering, decision trees
 
-Optimization (LP for resource allocation)
+Optimization: Linear programming for resource allocation
 
-Data visualization (ggplot2, base R plots)
+Data Visualization: ggplot2, base R plots, interactive dashboards
 
-Key datasets: S&P 500 companies, global health indicators, Starbucks nutrition, fetal health diagnostics.
+Key Datasets:
 
-### File Descriptions
-Core Analyses
-Basketball_Player_Data_Profiling.Rmd: NBA player data type validation and summary stats.
+Financial: S&P 500 companies, retail sales
 
-Retail_Transaction_Data_Wrangling.Rmd: Sales data cleaning and transformation.
+Public Sector: Government contract timelines, approval patterns
+
+Health: Global life expectancy, fetal diagnostics
+
+Consumer: Starbucks nutrition profiles
+
+Updated File Descriptions
+Core Analytics
+Basketball_Player_Data_Profiling.Rmd: NBA player data validation
+
+Retail_Transaction_Data_Wrangling.Rmd: Sales ETL pipelines
+
+Contract_Analytics_Visualization.Rmd: Government contract trends and type distributions (NEW)
 
 Statistical Modeling
-Global_Health_Determinants_Regression.Rmd: Life expectancy predictors using OLS.
+Global_Health_Determinants_Regression.Rmd: Socioeconomic predictors of lifespan
 
-S&P500_Financial_Performance_Analysis.Rmd: Sectoral market cap trends and EBITDA clustering.
+S&P500_Financial_Performance_Analysis.Rmd: Sectoral EBITDA clustering
 
-Fetal_Health_Prediction_Model.Rmd: Decision tree classification for fetal diagnostics.
+Fetal_Health_Prediction_Model.Rmd: Clinical classification
 
 Optimization
-Manufacturing_Production_Optimization.Rmd: LP model for fitness equipment production.
+Manufacturing_Production_Optimization.Rmd: Fitness equipment LP model
 
-Dietary_Cost_Minimization_Model.Rmd: Nutrient cost optimization.
+Dietary_Cost_Minimization_Model.Rmd: Nutritional budget optimization
 
-### Technical Stack
-Languages: R
+Enhanced Technical Stack
+Languages: R, SQL
 
 Libraries:
 
-Data Wrangling: dplyr, tidyr
+Category	Tools
+Data Wrangling	dplyr, tidyr, lubridate
+Visualization	ggplot2, plotly, RColorBrewer
+Modeling	caret, rpart, stats
+Optimization	lpSolve
+Key Insights Expansion
+Public Sector Analytics
 
-Modeling: stats, caret, rpart
+Contract approval timelines show [X] day average lag (from Contract_Analytics_Visualization)
 
-Visualization: ggplot2, lattice
+Top 3 contract types comprise [Y]% of agreements
 
-Optimization: lpSolve
+Financial Markets
 
-### How to Use
-Clone repo:
+Technology sector dominates S&P 500 (avg. $1.2T market cap)
 
-bash
-git clone [repo-url]
-Install dependencies:
+Energy sector shows highest revenue growth volatility
 
-r
-install.packages(c("dplyr", "ggplot2", "lpSolve"))
-Run RMarkdown files interactively or knit to HTML/PDF.
+Health Analytics
 
-### Key Insights
-S&P 500: Technology sector dominates market cap (avg. $1.2T).
+Income composition explains 62% of life expectancy variance
 
-Health Data: Income composition explains 62% of life expectancy variance.
+Fetal health classifier achieves 93% accuracy
 
-Optimization: Steel availability drives 80% of profit sensitivity in production models.
+Operations Research
+
+Steel availability drives 80% of profit sensitivity in production models
+
+Dietary optimization reduces costs by 22% while meeting nutrient targets
