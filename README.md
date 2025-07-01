@@ -1,5 +1,4 @@
 # R Data Analysis Portfolio
-R Data Analysis Portfolio
 Author: Larbi Moukhlis
 
 Project Overview
