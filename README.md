@@ -1,18 +1,18 @@
 # R Data Analysis Portfolio
 Author: Larbi Moukhlis
 
-Project Overview
+### Project Overview
 This repository contains R-based analytical projects covering:
 
-Descriptive Analytics: Distributions, sector comparisons, contract type frequencies
+## Descriptive Analytics: Distributions, sector comparisons, contract type frequencies
 
-Predictive Modeling: Linear regression, k-means clustering, decision trees
+## Predictive Modeling: Linear regression, k-means clustering, decision trees
 
-Optimization: Linear programming for resource allocation
+## Optimization: Linear programming for resource allocation
 
-Data Visualization: ggplot2, base R plots, interactive dashboards
+## Data Visualization: ggplot2, base R plots, interactive dashboards
 
-Key Datasets:
+### Key Datasets:
 
 Financial: S&P 500 companies, retail sales
 
@@ -22,22 +22,22 @@ Health: Global life expectancy, fetal diagnostics
 
 Consumer: Starbucks nutrition profiles
 
-Updated File Descriptions
+### Updated File Descriptions
 Core Analytics
 Basketball_Player_Data_Profiling.Rmd: NBA player data validation
 
 Retail_Transaction_Data_Wrangling.Rmd: Sales ETL pipelines
 
-Contract_Analytics_Visualization.Rmd: Government contract trends and type distributions (NEW)
+### Contract_Analytics_Visualization.Rmd: Government contract trends and type distributions (NEW)
 
-Statistical Modeling
+### Statistical Modeling
 Global_Health_Determinants_Regression.Rmd: Socioeconomic predictors of lifespan
 
 S&P500_Financial_Performance_Analysis.Rmd: Sectoral EBITDA clustering
 
 Fetal_Health_Prediction_Model.Rmd: Clinical classification
 
-Optimization
+### Optimization
 Manufacturing_Production_Optimization.Rmd: Fitness equipment LP model
 
 Dietary_Cost_Minimization_Model.Rmd: Nutritional budget optimization
@@ -45,7 +45,7 @@ Dietary_Cost_Minimization_Model.Rmd: Nutritional budget optimization
 Enhanced Technical Stack
 Languages: R, SQL
 
-Libraries:
+### Libraries:
 
 Category	Tools
 Data Wrangling	dplyr, tidyr, lubridate
