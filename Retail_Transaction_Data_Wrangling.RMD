@@ -1,0 +1,174 @@
+---
+title: "Lab 2: Customer Sales Data Analysis"
+author: "Your Name Here"
+output: 
+  html_document: 
+    code_download: yes
+    toc: yes
+---
+
+# Lab 2 
+
+### Q1: Create variables for a single transaction
+Create and assign values to the following variables:
+-   CustomerID  1023
+-   CustomerName  "Alice Johnson"
+-   Product  "Laptop"
+-   Quantity  2
+-   UnitPrice  899.99
+-   TotalPrice = Quantity * UnitPrice
+
+```{r}
+CustomerID = 1023
+CustomerName = "Alice Johnson"
+Product = "Laptop"
+Quantity = 2 
+UnitPrice = 899.99 
+TotalPrice = Quantity * UnitPrice
+```
+
+### Q2: Display variables and check data types
+-   to display, just type each object name. 
+-   use class() to see the data type for each
+```{r}
+CustomerID
+CustomerName
+Product
+Quantity 
+UnitPrice
+TotalPrice 
+class(CustomerID)
+class(CustomerName)
+class(Product)
+class(Quantity)
+class(UnitPrice)
+class(TotalPrice)
+
+
+```
+
+### Q3: Convert data types, if necessary ( I am saying what it should be in the instructions below. Check the previous chunk output to see what changes are necessary)
+-   CustomerID  integer
+-   CustomerName  character
+-   Product  factor
+-   Quantity  integer
+-   UnitPrice  numeric
+-   TotalPrice numeric
+```{r}
+CustomerID = as.integer(CustomerID)
+Product = as.factor(Product)
+Quantity = as.integer(Quantity)
+```
+
+### Q4: Create a data frame for multiple transactions: 
+- Create a vector for each column:
+
+| CustomerID | CustomerName    | Product   | Quantity | UnitPrice | 
+|------------|---------------|------------|----------|----------|
+| 1023       | Alice Johnson  | Laptop     | 2        | 899.99   | 
+| 1045       | Bob Smith      | Smartphone | 1        | 599.99   | 
+| 1078       | Carol Lee      | Tablet     | 3        | 299.99   | 
+| 1101       | David Wong     | Headphones | 4        | 199.99   | 
+
+```{r}
+CustomerID = c(1023, 1045, 1078, 1101)
+CustomerName = c("Alice Johson", "Bob Smith", "Carol Lee", "David Wong")
+Product = c("Laptop", "Smartphone", "Table", "Headphones")
+Quantity = c(2,1,3,4)
+UnitPrice = c(899.99, 599.99, 299.99, 199.99)
+Sales_Data = data.frame(CustomerID,CustomerName, Product, Quantity, UnitPrice)
+```
+
+### Q5: Display the structure of the data frame
+- Use `str()` to display the structure of `sales_data`.
+```{r}
+str(Sales_Data)
+```
+
+### Q6: Convert data types in the data frame
+- Ensure the following column types:
+- CustomerID integer
+- CustomerName character
+- Product factor
+- Quantity integer
+- UnitPrice numeric
+```{r}
+class(CustomerID)
+class(CustomerName)
+class(Product)
+class(Quantity)
+class(UnitPrice)
+class(TotalPrice)
+CustomerID = as.integer(CustomerID)
+Product = as.factor(Product)
+Quantity = as.integer(Quantity)
+```
+
+### Q7: Compute the average purchase amount
+- create a new column called TotalPrice to sales_data multiplying the columns. code: sales_data$TotalPrice = sales_data$Quantity * sales_data$UnitPrice
+- After in the same chunk, calculate the average `TotalPrice` for all transactions from sales_data.
+```{r}
+Sales_Data$Total_Price = Sales_Data$Quantity * Sales_Data$UnitPrice
+mean(Sales_Data$Total_Price)
+```
+
+### Q8: Find the most frequently purchased product
+- Display the count of each product in `sales_data`.
+```{r}
+table(Sales_Data$Product)
+```
+
+### Q9: Display the number of purchases per customer
+```{r}
+table(Sales_Data$Product, Sales_Data$CustomerID)
+```
+
+### Q10: Create a subset for the sales_data where total purchase is greater than $500
+- Identify and display transactions where `TotalPrice` is greater than 500 and use subset to create the new dataframe
+called sales_500
+```{r}
+sales_500 <- subset(Sales_Data, Total_Price > 500)
+```
+
+### Q11: Display transactions where Quantity is greater than 2
+- Display transactions where `Quantity` is more than 2. Hint: Use rows, columns and throw the sales_data$Quantity > 2 in
+the rows section of sales_data[rows,columns]
+```{r}
+Sales_Data[Sales_Data$Quantity > 2,]
+```
+
+### Q12: Display the first row of `sales_data` for all columns. Hint: Rows, Columns
+```{r}
+Sales_Data[1,]
+```
+
+### Q13: Extract the UnitPrice of the third row-- Retrieve and display the `UnitPrice` for the third row.
+```{r}
+Sales_Data[3,"UnitPrice"]
+```
+
+### Q14: Update the Quantity of the second row to 5
+- Modify the `Quantity` value for the second row to 5.
+- Display the updated data frame. (just type sales_data)
+```{r}
+Sales_Data[2,"Quantity"] <- 5
+Sales_Data$Total_Price = Sales_Data$Quantity * Sales_Data$UnitPrice
+Sales_Data
+```
+
+### Q15: Replace the customer name of the fourth row with "Doe"
+- Change the customer name in the fourth row to " Doe ".
+- Display the updated data frame.
+```{r}
+Sales_Data[4,"CustomerName"] <- "Doe"
+Sales_Data
+```
+
+
+
+**ADD THE QUESTIONS BELOW AND A CHUNK FOLLOWING EACH TO THE LAB2.RMD**
+
+
+
+
+
