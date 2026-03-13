@@ -1,0 +1,125 @@
+---
+title: "Lab 6"
+author: "Larbi Moukhlis"
+date: "26 March 2025"
+output: 
+  html_document: 
+    code_download: yes
+    toc: yes
+---
+
+
+**Copyright Kaitlyn Hoffmann, All rights reserved. Not for resale, distribution, or posting to external sites for all content provided.**
+
+# Classification: Decision Trees
+#-----------------------------------------------
+
+**IMPORTANT NOTE: do not put install.package code into a chunk or you may not be able to knit. To run, select the two lines and click Run-- Run selected line(s)**
+#-----------------------------------------------
+
+## Load/Call each library (rpart and rpart.plot). Needs to be called each time you need to access the functions rpart or rpart.plot
+```{r}
+library (rpart)
+library (rpart.plot)
+```
+
+## Question 1: Create a data frame loaded from fetal_health.csv and call it fetal. 
+**Note: there is a column called fetal_health that we will be using (do not get it confused later on)**
+```{r}
+fetal = read.csv("fetal_health.csv")
+```
+
+## Question 2: Display the first 10 rows from the data frame called fetal
+```{r}
+head(fetal, 10)
+```
+
+
+
+## No Code needed, just run: Create a subset from fetal with 70% of the rows assigned to a train dataframe and the remaining 30% assigned to a test data frame
+```{r}
+## 70% of the sample size
+smp_size <- floor(0.70 * nrow(fetal))
+## set the seed to make your partition reproducible
+set.seed(123)
+train_ind <- sample(seq_len(nrow(fetal)), size = smp_size)
+train <- fetal[train_ind, ]
+test <- fetal[-train_ind, ]
+```
+
+
+**Now, you will use train and test for the following: using fetal (onward) will result in loss of points**
+
+
+## Question 3: Run the decision tree function. This will generate the algorithm (decision tree) to predict the fetal_health based on the characteristics of the patients (age, sex, blood pressure, cholesterol, Sodium).
+```{r}
+fetal_tree = rpart(fetal_health~., fetal, method="class")
+```
+
+## Question 4: Display the decision tree for predicting the fetal_health
+```{r}
+rpart.plot(fetal_tree, type=4, extra=101)
+
+```
+
+
+## Question 5: Display the frequency: fetal_health from the validation data
+```{r}
+table(test$fetal_health)
+```
+
+## Question 6: Predict the fetal_health for patients in the validation data and call the predict vector p
+```{r}
+vector_p = predict(fetal_tree, test, type="class")
+```
+
+
+## Question 7: Add the predicted_health as a new column to the test data frame (validation data) using the vector p from the previous chunk
+```{r}
+test$predicted_health = vector_p
+```
+
+
+## Question 8: Display the frequency: look at the actual (fetal_health) and the predicted fetal_health from validation
+-   What column is the original fetal_health (what index)?
+-   What column is the new predicted_health (what index)?
+```{r}
+# What column is the original fetal_health (what index)?: 22
+# What column is the new predicted_health (what index)?: 23
+#Now, use the two columns above in the rows,columns for the table() using the data frame test
+table(test[,22:23])
+(477+64+54)/nrow(test)
+```
+
+
+## Question 9: Reading the table results:    
+```{r}
+#Result: 595 out of 638 are correctly predicted
+#The accuracy level =  595 / 638 = 93.27% 
+```
+
+
+
+## Question 10: Just as we did in class, walkthrough the following rows and comment what the predicted classification should be (look at the decision tree). In other words, each row represents a fetal patient, tell me what fetal_health would be administered to each. Comment your responses. There is an image of the decision tree in the homework pdf for this assignment on Sakai (check the assignment)
+-   Row 1: mean_value_of_short_term_variability = 0.60 | histogram_mean = 110 | prolongued_decelerations = 0.001 | percentage_of_time_with_abnormal_long_term_variability = 8 | histogram_max = 190 | baseline_value = 135
+-   Row 2: mean_value_of_short_term_variability = 0.52 | percentage_of_time_with_abnormal_long_term_variability = 65 | abnormal_short_term_variability = 85 | uterine_contractions = 0.005 | histogram_max = 160
+-   Row 3: mean_value_of_short_term_variability = 0.58 | histogram_mean = 115 | prolongued_decelerations = 0.0005 | percentage_of_time_with_abnormal_long_term_variability = 6 | histogram_max = 180 | baseline_value = 125
+
+The answer is either 1, 2, or 3.
+
+```{r}
+#Row1: 1
+#Row2: 2 
+#Row3: 3
+```
+
+### Knit to HTML
+
+
+
+
+
+**Copyright Kaitlyn Hoffmann, All rights reserved. Not for resale, distribution, or posting to external sites for all content provided.**
+
+
+
