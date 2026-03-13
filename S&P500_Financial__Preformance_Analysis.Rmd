@@ -1,0 +1,131 @@
+---
+title: "INFS 343 Project"
+output: html_document
+date: "2025-04-16"
+---
+
+```{r}
+SP500_Companies = read.csv("sp500_companies.csv")
+```
+
+```{r}
+SP500_Breakdown <-SP500_Companies[1:503,c("Shortname","Sector", "Currentprice", "Marketcap", "Ebitda", "Revenuegrowth")]
+```
+
+# ------- Descriptive Analytics ------
+```{r}
+#Quick stats for key financial metrics 
+summary(SP500_Breakdown)
+```
+
+```{r}
+#Top 10 Average Market Caps by Sectors
+avg_marketcap_by_sector <- aggregate(Marketcap ~ Sector, 
+                                    data = SP500_Breakdown, 
+                                    FUN = mean)
+avg_marketcap_by_sector <- avg_marketcap_by_sector[order(-avg_marketcap_by_sector$Marketcap), ]
+
+avg_marketcap_by_sector$Marketcap <- avg_marketcap_by_sector$Marketcap / 1e9 
+
+names(avg_marketcap_by_sector)[2] <- "Avg_MarketCap_Billions"
+
+avg_marketcap_by_sector
+```
+
+```{r}
+# Top 10 companies by Market Cap
+top_10_marketcap <- SP500_Breakdown[order(-SP500_Breakdown$Marketcap),][1:11,]
+top_10_marketcap
+```
+
+```{r}
+# Top 10 Companies by Market Cap
+table(SP500_Breakdown$Sector)
+```
+
+```{r} 
+# Histogram of Market Capitalizations
+hist(SP500_Companies$Marketcap / 1e9,
+     breaks = 30,
+     main = "Distribution of Market Capitalizations (in Billions)",
+     xlab = "Market Cap (Billions)",
+     col = "blue",
+     border = "white")
+```
+
+```{r}
+# Plot boxplot for Market Cap Distribution By Sector
+boxplot(Marketcap / 1e9 ~ Sector,
+        data = SP500_Breakdown,
+        main = "Market Cap Distribution by Sector",
+        ylab = "Market Cap (Billions)",
+        xlab = NA,
+        las = 2,
+        col = "palegreen",
+        border = "black",
+        outline = FALSE,
+        cex.axis = 0.4,
+        cex.lab = 1.1,
+        cex.main = 1.3,
+        ylim = c(0, 400))
+mtext("Sector", side = 1, line = 3, at = 0, adj = 1, cex = 1)
+```
+
+
+```{r}
+#Linear Regression model for Marketcap
+SP500_Breakdown <- SP500_Companies[1:503, c("Shortname", "Sector", "Currentprice", "Marketcap", "Ebitda", "Revenuegrowth", "Fulltimeemployees")]
+SP500_Breakdown$Sector <- as.factor(SP500_Breakdown$Sector)
+model_lm <- lm(Marketcap ~ Revenuegrowth + Ebitda + Fulltimeemployees + Sector,
+               data = SP500_Breakdown)
+summary(model_lm)
+```
+
+```{r}
+#Clustering of SP500 Companies by Revenue Growth and Ebitda
+SP500_clean <- na.omit(SP500_Breakdown[, c("Revenuegrowth", "Ebitda", "Fulltimeemployees")])
+
+SP500_scaled <- scale(SP500_clean)
+
+set.seed(123)
+
+kmeans_model <- kmeans(SP500_scaled, centers = 3)
+
+SP500_Breakdown$Cluster <- NA 
+SP500_Breakdown$Cluster[complete.cases(SP500_clean)] <- kmeans_model$cluster 
+
+kmeans_model$centers
+
+library(ggplot2)
+
+SP500_Breakdown$EBITDA_Billions <- SP500_Breakdown$Ebitda / 1e9
+
+ggplot(SP500_Breakdown, aes(x = Revenuegrowth, y = EBITDA_Billions, color = factor(Cluster))) +
+  geom_point() +
+  labs(
+    title = "Clustering of SP500 Companies by Revenue Growth and EBITDA",
+    x = "Revenue Growth (%)",
+    y = "EBITDA (Billions)",
+    color = "Cluster"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#Optimization Model
+library(lpSolve)
+
+companies <- SP500_Breakdown[1:5, ]
+
+objective <- companies$Ebitda / 1e9
+
+constraint_matrix <- rbind(companies$Currentprice, rep(1, 5))
+rhs <- c(2000, 5)
+
+result <- lp("max", objective, constraint_matrix, c("<=", "<="), rhs, all.bin = TRUE)
+
+selected <- companies[result$solution == 1, ]
+
+selected[, c("Shortname", "Currentprice", "Ebitda")]
+```
+
