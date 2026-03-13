@@ -1,0 +1,137 @@
+---
+title: "Lab7 Part 2"
+author: "Larbi Moukhlis"
+date: "4/6/2025"
+output: 
+  html_document: 
+    code_download: yes
+    toc: yes
+---
+
+
+**Copyright Kaitlyn Hoffmann, All rights reserved. Not for resale, distribution, or posting to external sites for all content provided.**
+
+#   Optimization: Lab7 Part 2
+
+## Questions:Below there is a diet chart which gives calories, protein, carbohydrate, and fat content for 4 food items. Sara wants a diet with minimum cost. The diet chart is as follows: ...
+
+## The chart gives the nutrient content as well as the per-unit cost of each food item. The diet has to be planned in such a way that it should contain at least 500 calories, 6 grams of protein, 10 grams of carbohydrates and 8 grams of fat Determine how much of each food item is to be used in the diet to minimize the total cost. Make sure to change the direction in Ip function to "min" for this problem.
+
+### Question 1: Formulate the linear programming model for this problem.
+-   Use # to comment below each question (for each line)
+```{r}
+#----------------------------------
+#a. Define the decision variables
+ 
+# A = Food item 1, B = Food Item 2, C = Food Item 3 D = Food item 4 
+ 
+#----------------------------------
+#b. Formulate the objective function
+     
+# Min Z = 1.00A + 0.40B + 0.60C + 1.80D
+ 
+#----------------------------------
+#c. State the constraints.
+# **LABEL THE CONSTRAINT | Do not forget to also list the non-negativity constraints**
+
+# CALORIE CONSTRAINT (≥ 500 calories) 
+# 400A + 200B + 150C + 500D ≥ 500
+
+# PROTEIN CONSTRAINT (≥ 6 grams)
+# 3A + 2B + 0C + 0D ≥ 6
+
+# CARBOHYDRATE CONSTRAINT (≥ 10 grams)
+# 2A + 2B + 4C + 4D ≥ 10
+
+# FAT CONSTRAINT (≥ 8 grams)
+# 2A + 4B + 1C + 5D ≥ 8
+
+# NON-NEGATIVITY CONSTRAINTS:
+# A ≥ 0, B ≥ 0, C ≥ 0, D ≥ 0
+
+#----------------------------------
+``` 
+ 
+
+### Install lpSolve and run the library
+
+-   select the line below and click on Run selected line or Ctrl+Enter (Cmd+Enter)
+-   having install.packages code within a chunk can cause issues when knitting to HTML
+
+
+install.packages("lpSolve")
+
+
+
+### Load the lpSolve library to use the lp function
+-   Call the library function "lpSolve". You need to execute this library function each time when you run linear programming
+```{r}
+#no code needed this chunk, just run it
+library (lpSolve) 
+```
+
+
+
+
+### Question 2:	Enter the problem data and find the optimum solution for this problem using R Studio 
+-   Load the elements: 
+
+-   objective, constr, constr.dir, rhs (from cheat sheet)  -OR-
+-   ObjFunc, LeftSide, OpDirections, RightSide (from textbook/demo) 
+
+```{r}
+objective = c(1.00,.40,.60,1.80)
+constr = matrix(c(400,200,150,500,3,2,0,0,2,2,4,4,2,4,1,5), nrow = 4, byrow=TRUE)
+constr.dir = c(">=",">=",">=", ">=")
+rhs = c(500,6,10,8)
+```
+
+### Question 3: Run the lp function (optimum code from cheat sheet; lpmodel from textbook/demo)
+```{r}
+
+optimum_2 = lp(direction = "min", objective, constr, constr.dir, rhs, compute.sens = TRUE)
+
+```
+
+
+### Question 4: Display the solutions from the optimum solution 
+-   a. Display the solution values 
+-   b. Display the objective value 
+-   c. Display the dual values 
+```{r}
+
+optimum_2$solution 
+optimum_2$objval
+optimum_2$duals
+
+```
+
+### Question 5: Answer the questions inside the chunk using # to comment 
+-   What are the dual values for the calorie, protein, carbohydrate, and fat requirements?
+-  How much would the cost increase if the diet required one additional gram of calorie (501 grams instead of 500)? 
+```{r}
+#--------------------
+# What are the dual values for the calorie, protein, carbohydrate, and fat requirements?
+
+# Calories: 0.00
+# Protein (in grams): 0.05
+# Carbohydrates (in grams): 0.15
+# Fat (in grams): 0.55
+
+#--------------------
+# How much would the cost increase if the diet required one additional gram of calorie (501 grams instead of 500)? 
+# The cost would not increase if the calorie requirement increased by 1 gram (from 500 to 501) because the dual value for calories is zero.
+
+#--------------------
+```
+
+
+
+
+### Knit to HTML
+
+
+
+
+**Copyright Kaitlyn Hoffmann, All rights reserved. Not for resale, distribution, or posting to external sites for all content provided.**
+
