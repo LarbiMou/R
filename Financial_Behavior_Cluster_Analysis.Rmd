@@ -1,0 +1,140 @@
+---
+title: "Lab 5: Clustering"
+author: "Larbi Moukhlis"
+date: "3/23/2025"
+output: 
+  html_document: 
+    code_download: yes
+    toc: yes
+---
+
+**Note: Do not change anything or add anything (like the date) to the header above, just your name**
+
+
+
+# Cluster Analysis
+Data taken from: https://www.kaggle.com/datasets/arjunbhasin2013/ccdata
+
+
+
+## Question 1: Create a data frame loaded from creditcarddata.csv and call the data frame = creditcard
+```{r}
+creditcard = read.csv("creditcarddata.csv")
+```
+
+## Question 2: Display the first 10 rows from the data frame called creditcard
+
+```{r}
+head(creditcard, 10)
+```
+
+## Question 3: Create a new data frame creditcardNUM that will remove the non-numeric data from creditcard so we can procede with the K-Means analysis
+
+```{r}
+creditcardNUM = creditcard
+creditcardNUM$CUST_ID = NULL
+```
+
+```{r}
+library("factoextra")
+```
+
+## Question 4: Set the seed and build a model for k=1 and k=2 using kmeans
+-   Run K-Means for 1 cluster (k=1) and call the model km1
+-   Run K-Means for 2 clusters (k=2) and call the model km2
+-   Do not display the results, you will do that in the next few chunks
+```{r}
+set.seed(123)
+#km1
+
+km1 = kmeans(creditcardNUM, 1)
+
+#km2
+
+km2 = kmeans(creditcardNUM, 2)
+
+
+```
+
+
+## Question 5: Display the results for km1
+```{r}
+km1
+```
+
+## Question 6: Display the results for km2
+```{r}
+km2
+```
+
+## Question 7: Answer the following within the chunk as a comment: 
+-   What are the cluster sizes for km2?
+-   What is the average minimum payment for cluster2 compared to cluster1 for km2?
+-   What is the average balance for cluster2 compared to cluster1 for km2?
+-   What is the total sum of squares for km1?
+-   What is the within sum of squares for 2 clusters (km2)--should be 2 numbers? 
+-   What is the total sum of squares for 2 clusters (km2)?
+-   What is percent reduction from km1 to km2? 
+```{r}
+#---------------------------------------
+#What are the cluster sizes for km2?
+#Cluster 1: 1921
+#Cluster 2: 7029
+#---------------------------------------
+#What is the average minimum payment for cluster2 compared to cluster1 for km2?
+#Cluster 1: 1753.9329
+#Cluster 2: 582.5646
+#Difference: 1,171.37
+#---------------------------------------
+#What is the average balance for cluster2 compared to cluster1 for km2?
+#Cluster 1: 3838.1596
+#Cluster 2: 943.0851
+#Difference: 2895.07
+#---------------------------------------
+#What is the total sum of squares for km1?
+#km1 total sum of squares: 393306778023
+#---------------------------------------
+#What is the within sum of squares for the 2 clusters (km2)? 
+# Cluster 1: 204726166357 
+# Cluster 2: 74728388893 
+#---------------------------------------
+#What is the total sum of squares for km2? 
+#km2 total sum of squares: 279454555250
+#---------------------------------------
+#What is percent reduction from km1 to km2? 
+# (km1-totalsumofkm2)/km1
+# ((393306778023 - 279454555250) / (393306778023)) = 28.9%
+#---------------------------------------
+```
+
+
+## Question 8: Add the cluster vector from km2 back to creditcard as a new column/variable called cluster2 
+```{r}
+creditcard$cluster2 = km2$cluster
+```
+
+## Question 9: Display creditcard summary split BY the cluster column added (creditcard$cluster2)  (by() function or tapply) 
+
+```{r}
+by(creditcard$BALANCE, creditcard$cluster2, summary)
+```
+
+## Question 10: Conceptually, take everything you have learned up to this point and look at the data to provide a brief thought on what you can do to further analyze this data now that there are 2 clusters. What can you do to compare or contrast the clusters? Just provide one to two examples (there are many possibilities). For example (do not use), we can use descriptive statitics and use a boxplot for each cluster (so 2 separate plots) to see the difference in balance distribution between the clusters. 
+```{r}
+#Commented Response: 
+# An approach is to calculate the mean and standard deviation for each cluster across different variables to identify significant differences in central tendency and variability. 
+```
+
+
+
+
+### Knit to HTML
+
+
+
+
+
+**Copyright Kaitlyn Hoffmann, All rights reserved. Not for resale, distribution, or posting to external sites for all content provided.**
+
+
+
