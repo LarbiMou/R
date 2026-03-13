@@ -1,0 +1,142 @@
+---
+title: "Lab7 Part 1"
+author: "Larbi Moukhlis"
+date: "4/6/2025"
+output: 
+  html_document: 
+    code_download: yes
+    toc: yes
+---
+
+
+**Copyright Kaitlyn Hoffmann, All rights reserved. Not for resale, distribution, or posting to external sites for all content provided.**
+
+#   Optimization: Lab7 Part 1
+
+## Questions: A weight company produces three types of products: kettlebells, dumbbells, and plates. Kettlebells require 2 hours of labor, 1 hour of machine time, and 25 pounds of raw material per unit. Dumbbells require one half-hour of labor, one half-hour of machine time, 1 pound of steel, and 10 pounds of raw material per unit. Plates require 1 hour of labor, 1 hours of machine time, and 25 pounds of raw material per unit. The company has 250 hours of labor, 200 hours of machine time, 4000 pounds of raw material available, and 200 pound of steel. Kettlebells sell for $50 per unit, Dumbbells for $25 per unit, and Plates for $40 per unit. How many of each product should be produced to maximize the company's profit?
+
+### Question 1: Formulate the linear programming model for this problem.
+-   Use # to comment below each question (for each line)
+```{r}
+#----------------------------------
+#a. Define the decision variables
+ 
+# k = kettlebells, d = dumbbells, p = plates 
+ 
+#----------------------------------
+#b. Formulate the objective function
+     
+# Max Profit Z = 50k + 25d + 40p
+
+#----------------------------------
+#c. State the constraints.
+# **LABEL THE CONSTRAINT | Do not forget to also list the non-negativity constraints**
+
+# ** Constraints**
+#Labor: 2k + .5d + 1p <= 250
+# Machine Time: 1k + .5d + 1p <= 200 
+# Raw Material: 25k + 10d + 25p <= 4000
+# Steel: 1d <= 200 
+
+## **Non-Negativity Constraints** ##
+
+# k >= 0, d >= 0, p >= 0
+
+#----------------------------------
+``` 
+ 
+
+### Install lpSolve and run the library
+
+-   select the line below and click on Run selected line or Ctrl+Enter (Cmd+Enter)
+-   having install.packages code within a chunk can cause issues when knitting to HTML
+
+# install.packages("lpSolve")
+
+### Load the lpSolve library to use the lp function
+-   Call the library function "lpSolve". You need to execute this library function each time when you run linear programming
+```{r}
+#no code needed this chunk, just run it
+library (lpSolve) 
+```
+
+
+
+
+### Question 2:	Enter the problem data and find the optimum solution for this problem using R Studio 
+-   Load the elements: 
+
+-   objective, constr, constr.dir, rhs (from cheat sheet)  -OR-
+-   ObjFunc, LeftSide, OpDirections, RightSide (from textbook/demo) 
+
+```{r}
+objective = c(50,25,40)
+constr=matrix(c(2,.5,1,1,.5,1,25,10,25,0,1,0),ncol=3, byrow=TRUE)
+constr.dir = c("<=","<=","<=","<=")
+rhs = c(250,200,4000,200)
+```
+
+### Question 3: Run the lp function (optimum code from cheat sheet; lpmodel from textbook/demo)
+```{r}
+
+optimum_1 = lp(direction = "max", objective, constr, constr.dir, rhs, compute.sens = TRUE)
+
+```
+
+
+### Question 4: Display the solutions from the optimum solution 
+-   a. Display the solution values 
+-   b. Display the objective value 
+-   c. Display the dual values 
+```{r}
+
+optimum_1$solution
+optimum_1$objval
+optimum_1$duals
+
+```
+
+### Question 5: Answer the questions inside the chunk using # to comment 
+-   What are the dual values? List and label each.
+-   How much would the profit increase if we had 10 more pounds of steel on hand?
+-   Should you purchase additional pounds of raw material if a supplier offered you 100 pounds of raw material for 1100? Briefly, why or why not? 
+-   How much would the profit increase if we had one additional unit of labor (hour)?
+```{r}
+#--------------------
+# What are the dual values? List and label each.
+
+# Labor: 10 
+# Machine Time: 0 
+# Raw Material: 1.2
+# Steel: 8.0
+# Kettlebells: 0 
+# Dumbbells: 0 
+# Plates: 0 
+
+#--------------------
+# How much would the profit increase if we had 10 more pounds of steel on hand?
+
+# Answer: The profit would increase by $80 if the company had 10 more pounds of steel on hand, assuming all other constraints remain unchanged, ceteris parabus.
+
+#--------------------
+# Should you purchase additional pounds of raw material if a supplier offered you 100 pounds of raw material for 110? Briefly, why or why not? 
+
+# Answer: Yes, you should purchase it because there is a profit increase by $10, the value of raw materials is $1.20 per pound, so for 100lbs it would be worth $120 and purchasing it for $110 would result in a net gain increase of $10.
+
+#--------------------
+#	How much would the profit increase if we had one additional unit of labor (hour)?
+
+# The profit increase for one additional unit of labor hour is $10
+
+#--------------------
+```
+
+
+
+### Knit to HTML
+
+
+
+
+**Copyright Kaitlyn Hoffmann, All rights reserved. Not for resale, distribution, or posting to external sites for all content provided.**
+
