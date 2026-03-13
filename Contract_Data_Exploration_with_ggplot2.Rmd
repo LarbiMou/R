@@ -1,0 +1,105 @@
+```{r}
+getwd()
+```
+
+```{r}
+list.files()
+```
+
+```{r}
+contracts_data = read.csv("contracts.csv")
+```
+
+```{r}
+install.packages("ggplot2")
+``` 
+
+```{r}
+colnames(contracts_data)
+```
+
+```{r}
+set.seed(123)  # Set seed for reproducibility
+
+# Define the date range
+start_date <- as.Date("2020-01-01")
+end_date <- as.Date("2024-01-01")
+
+# Select a random sample of 50 rows
+contracts_sample <- contracts_data[sample(nrow(contracts_data), 50), ]
+
+# Generate random dates for the sampled data
+contracts_sample$Start.Date <- sample(seq(start_date, end_date, by="day"), nrow(contracts_sample), replace = TRUE)
+contracts_sample$Approval.Date <- sample(seq(start_date, end_date, by="day"), nrow(contracts_sample), replace = TRUE)
+
+# Create the plot
+ggplot(contracts_sample, aes(x = Start.Date, y = Approval.Date)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +  # Add regression line
+  labs(title = "Start Date vs. Approval Date (Sample of 50)", 
+       x = "Start Date", 
+       y = "Approval Date") +
+  theme_minimal()
+```
+
+```{r}
+nrow(contracts_data)
+colnames(contracts_data)
+```
+
+```{r}
+install.packages("dplyr")
+library("dyplyr")
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+# Replace blank contract types with "Blank"
+contracts_data <- contracts_data %>%
+  mutate(Contract.Type = ifelse(trimws(Contract.Type) == "", "Blank", Contract.Type))
+
+# Summarize contract types, including "Blank"
+top_contracts <- contracts_data %>%
+  group_by(Contract.Type) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count)) %>%
+  slice_head(n = 10)  # Ensure top 10 contracts
+
+# Plot the top contract types including "Blank" entries
+ggplot(top_contracts, aes(x = reorder(Contract.Type, -Count), y = Count)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label = Count), vjust = -0.2, size = 5, color = "black", fontface = "bold") +  
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, family = "Arial", face = "bold", size = 6),  # Fixed syntax
+    plot.title.position = "plot", 
+    plot.title = element_text(vjust = 0.7, face = "bold"),
+    plot.margin = margin(15, 15, 15, 15)
+  ) +
+  labs(title = "Top 10 Contract Types by Count", x = "Contract Type", y = "Count") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15)))  # Adds extra space above bars
+
+```
+
+
+```{r}
+library(dplyr)
+
+# Assuming contracts_data is your data frame containing the 'Contract.Type' column
+contract_counts <- contracts_data %>%
+  group_by(Contract.Type) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count))
+
+# Check if there's more than one distinct contract type
+if(nrow(contract_counts) > 1) {
+  second_most_common_contract <- contract_counts %>%
+    slice(2)  # Get the second most common contract type
+  print(second_most_common_contract)
+} else {
+  print("There is no second most common contract type.")
+}
+```
+
+
